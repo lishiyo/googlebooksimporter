@@ -6,13 +6,13 @@ from .session import GoodreadsSession
 from .user import GoodreadsUser
 from .book import GoodreadsBook
 from .author import GoodreadsAuthor
-from .request import GoodreadsRequest
+from .request import GoodreadsRequest, GoodreadsRequestException
 from .comment import GoodreadsComment
 from .event import GoodreadsEvent
 from .group import GoodreadsGroup
 from .owned_book import GoodreadsOwnedBook
 from .review import GoodreadsReview
-
+import helpers
 
 class GoodreadsClientException(Exception):
     def __init__(self, error_msg):
@@ -43,7 +43,7 @@ class GoodreadsClient():
         else:
             url = self.session.oauth_init()
             webbrowser.open(url)
-            while input("Have you authorized me? (y/n)") != 'y':
+            while raw_input("Have you authorized me? (y/n)") == 'n':
                 pass
             self.session.oauth_finalize()
 
@@ -62,6 +62,13 @@ class GoodreadsClient():
 
     def request_oauth(self, *args, **kwargs):
         resp = self.session.get(*args, **kwargs)
+        return resp
+
+    def post(self, *args, **kwargs):
+        # client, path, query_dict
+        # helpers.print_everything(args)
+        # helpers.table_things(kwargs)
+        resp = self.session.post(*args, **kwargs)
         return resp
 
     def user(self, user_id=None, username=None):
@@ -168,3 +175,21 @@ class GoodreadsClient():
         """Get a review"""
         resp = self.request("/review/show.xml", {'id': review_id})
         return GoodreadsReview(resp['review'])
+
+    def addBookToShelf(self, shelf_name, book_id):
+        """POST a book to a shelf"""
+        payload = {
+            'name': shelf_name,
+            'book_id': book_id
+        }
+        return self.post('/shelf/add_to_shelf.xml', data=payload)
+
+    # @param shelf_names comma-separated list of shelf names
+    # @param book_ids comma-separated list of book ids
+    def addBooksToShelves(self, shelf_names, book_ids):
+        """POST multiple books to multiple shelves"""
+        payload = {
+            'bookids': book_ids,
+            'shelves': shelf_names
+        }
+        return self.post('/shelf/add_books_to_shelves.xml', data=payload)

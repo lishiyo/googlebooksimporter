@@ -52,3 +52,15 @@ class GoodreadsSession():
         base = "https://www.goodreads.com/"
         resp = self.session.get(base + path, params=params)
         return xmltodict.parse(resp.content)['GoodreadsResponse']
+
+    def post(self, path, data=None):
+        """OAuth post request"""
+        if not data:
+            data = {}
+        base = "https://www.goodreads.com"
+        url = base + path
+        print "SESSION - POSTING with url: "
+        print url
+        resp = self.session.post(url, data=data)
+        return resp
+        # return xmltodict.parse(resp.content)['GoodreadsResponse']
