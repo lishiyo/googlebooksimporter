@@ -114,11 +114,16 @@ class GoodreadsClient():
         """
         resp = self.request("search/index.xml",
                             {'q': q, 'page': page, 'search[field]': search_field})
-        works = resp['search']['results']['work']
-        # If there's only one work returned, put it in a list.
-        if type(works) == collections.OrderedDict:
-            works = [works]
-        return [self.book(work['best_book']['id']['#text']) for work in works]
+
+        if resp['search']['results']:
+            works = resp['search']['results']['work']
+            # If there's only one work returned, put it in a list.
+            if type(works) == collections.OrderedDict:
+                works = [works]
+            # return list of GoodreadsBook
+            return [self.book(work['best_book']['id']['#text']) for work in works]
+        else:
+            return []
 
     def group(self, group_id):
         """Get info about a group"""
