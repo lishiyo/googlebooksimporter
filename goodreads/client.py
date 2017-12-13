@@ -12,7 +12,7 @@ from .event import GoodreadsEvent
 from .group import GoodreadsGroup
 from .owned_book import GoodreadsOwnedBook
 from .review import GoodreadsReview
-import helpers
+from . import helpers
 
 class GoodreadsClientException(Exception):
     def __init__(self, error_msg):
@@ -43,7 +43,7 @@ class GoodreadsClient():
         else:
             url = self.session.oauth_init()
             webbrowser.open(url)
-            while raw_input("Have you authorized me? (y/n)") == 'n':
+            while input("Have you authorized me? (y/n)") == 'n':
                 pass
             self.session.oauth_finalize()
 

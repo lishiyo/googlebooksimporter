@@ -5,3 +5,4 @@ dist/
 goodreads.egg-info/
 tests/.coverage
 data/
+config.json

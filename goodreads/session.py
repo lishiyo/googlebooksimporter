@@ -59,7 +59,7 @@ class GoodreadsSession():
             data = {}
         base = "https://www.goodreads.com"
         url = base + path
-        print "SESSION - POSTING with url: " + url
+        print("SESSION - POSTING with url: " + url)
         resp = self.session.post(url, data=data)
         return resp
         # return xmltodict.parse(resp.content)['GoodreadsResponse']

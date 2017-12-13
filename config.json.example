@@ -1,0 +1,8 @@
+{
+    "GOODREADS_KEY": "mykey",
+    "GOODREADS_SECRET": "mysecret",
+    "GOODREADS_USER_ID": "myid",
+    "INPUT_TITLES_PATH": "../google-script/tmp/volumes_list.json",
+    "TITLES_FAILED_PATH": "./data/titles_failed.json",
+    "GOODREADS_TARGET_SHELFNAME": "googleplaybooks"
+}
