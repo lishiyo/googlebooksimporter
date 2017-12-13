@@ -1,10 +1,10 @@
 goodreads books importer
 =========
 
-Python script to bulk-upload my google play books to my goodreads:
-- INPUT: json list of book titles, whether from google books or elsewhere, and a target shelf in goodreads 
+Python script to bulk-upload my google play books to goodreads:
+- given json list of book titles, whether from google books or elsewhere, and a target shelf in goodreads 
 - script will parse for best match in goodreads given the title
-- result: upload the books to the target shelf in goodreads
+- result is the books will be added to the goodreads shelf
 
 #### Usage
 
